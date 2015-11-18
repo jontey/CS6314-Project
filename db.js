@@ -5,7 +5,6 @@ db.quotation = db.get('quotation_'+YEAR);
 db.manufacturers = db.get('manufacturers');
 db.items = db.get('items');
 db.stock = db.get('stock');
-db.quotation_items = db.get('quotation_items_'+YEAR);
 db.users = db.get('users');
 db.groups = db.get('groups');
 db.customer = db.get('customers');
@@ -14,6 +13,50 @@ db.counters = db.get('counter');
 db.quotation.index('q_id', {
     unique: true
 });
+
+db.counters.find({name: "q_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "q_id",
+				sequence_value: 0,
+		});
+	}
+ });
+
+db.manufacturers.index('m_id', {
+    unique: true
+});
+
+db.counters.find({name: "m_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "m_id",
+				sequence_value: 0,
+		});
+	}
+ });
+
+db.items.index('i_id', {
+    unique: true
+});
+
+db.counters.find({name: "i_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "i_id",
+				sequence_value: 0,
+		});
+	}
+ });
 
 db.getNextSequenceValue = function (sequenceName, cb){
 	db.counters.findAndModify({

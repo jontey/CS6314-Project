@@ -48,6 +48,7 @@ router.get('/:limit/:first', function(req, res) {
 
 /*
  * POST quotation/add/
+ * items is an array
  */
 router.post('/add/', function(req, res) {
 	db.getNextSequenceValue("q_id");
@@ -57,6 +58,7 @@ router.post('/add/', function(req, res) {
 							"date": new Date(),
 							"u_id": req.body.u_id,
 							"c_id": req.body.c_id,
+							"items": req.body.items,
 							"total": req.body.total,
 							"version": req.body.version,
 							},

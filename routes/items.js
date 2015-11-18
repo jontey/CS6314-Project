@@ -4,11 +4,11 @@ var router = express.Router();
 var db = require('./../db');
 
 /*
- * GET manufacturers/
+ * GET items/
  * LIMIT 100
  */
 router.get('/', function(req, res) {
-    db.manufacturers.find({},
+    db.items.find({},
 		{limit: 100},
 		function (err, docs){
 			if (err) {
@@ -19,17 +19,17 @@ router.get('/', function(req, res) {
 			} else {
 				res.send({
 					ok: true,
-					manufactuers: docs,
+					items: docs,
 				});
 			}
 	});
 });
 
 /*
- * GET manufacturers/:id
+ * GET items/:id
  */
 router.get('/:id', function(req, res) {
-    db.manufacturers.find({m_id: parseInt(req.params.id)},
+    db.items.find({i_id: parseInt(req.params.id)},
 		{},
 		function (err, docs){
 			if (err) {
@@ -40,24 +40,25 @@ router.get('/:id', function(req, res) {
 			} else {
 				res.send({
 					ok: true,
-					manufactuers: docs,
+					items: docs,
 				});
 			}
 	});
 });
 
 /*
- * POST manufacturers/add/
+ * POST items/add/
  * @TODO - Check for already existing manufacturer
  */
 router.post('/add/', function(req, res) {
-	db.getNextSequenceValue("m_id");
-	db.counters.findOne({name: "m_id"}).on("success", function (doc){
-		db.manufacturers.insert({
-								"m_id": doc.sequence_value,
-								"name": req.body.name,
-								"address": req.body.address,
-								},
+	db.getNextSequenceValue("i_id");
+	db.counters.findOne({name: "i_id"}).on("success", function (doc){
+		db.items.insert({
+						"i_id": doc.sequence_value,
+						"m_id": req.body.m_id,
+						"name": req.body.name,
+						"model": req.body.model,
+						},
 			function (err, doc) {
 				if (err) {
 					res.send({
@@ -67,7 +68,7 @@ router.post('/add/', function(req, res) {
 				} else {
 					res.send({
 						ok: true,
-						manufactuers: [doc],
+						items: [doc],
 					});
 				}
 			});
@@ -75,14 +76,15 @@ router.post('/add/', function(req, res) {
 });
 
 /*
- * POST manufacturers/edit/:id
+ * POST items/edit/:id
  */
 router.post('/edit/:id', function(req, res) {
-    db.manufacturers.update({ m_id: parseInt(req.params.id) },
-							{ $set:{
-								"name": req.body.name,
-								"address": req.body.address,
-							}},
+    db.items.update({ i_id: parseInt(req.params.id) },
+					{ $set:{
+						"m_id": req.body.m_id,
+						"name": req.body.name,
+						"model": req.body.model,
+					}},
 		function (err, doc){
 		if(err) {
 			console.log(err);
@@ -100,10 +102,10 @@ router.post('/edit/:id', function(req, res) {
 });
 
 /*
- * POST manufacturers/search/
+ * POST items/search/
  */
 router.post('/search/', function(req, res) {
-    db.manufacturers.find({m_id: {$in: req.body.ids}},
+    db.items.find({i_id: {$in: req.body.ids}},
 		{},
 		function (err, docs){
 			if (err) {
@@ -114,7 +116,7 @@ router.post('/search/', function(req, res) {
 			} else {
 				res.send({
 					ok: true,
-					manufactuers: docs,
+					items: docs,
 				});
 			}
 	});
