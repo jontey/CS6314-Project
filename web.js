@@ -45,7 +45,7 @@ app.get("/purchase", function (req, res){
 	res.render("management", {title: "Purchase Orders"});
 });
 app.get("/vendor", function (req, res){
-	res.render("management", {title: "Vendors"});
+	res.render("vendor", {title: "Vendors"});
 });
 app.get("/brand", function (req, res){
 	res.render("brand", {title: "Brands"});

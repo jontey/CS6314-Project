@@ -3,56 +3,51 @@ extend index
 block content
 	div(class="mdl-grid demo-content")
 		div(class="mdl-cell mdl-cell--12-col mdl-grid")
-			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New brand
+			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New vendor
 		form(id="add_form", method="post", enctype="multipart/form-data")
 			div(id="content_add", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
 				div(class="form-group mdl-cell")
-					label(for="add_logo", class="control-label") Logo
-					input(type="file", id="add_logo")
-				div(class="form-group mdl-cell")
-					label(for="add_full_name", class="control-label") Full Name
+					label(for="add_name", class="control-label") Name
 					div
-						input(type="text", class="form-control", id="add_full_name")
+						input(type="text", class="form-control", id="add_name")
 				div(class="form-group mdl-cell")
-					label(for="add_short_name", class="control-label") Short Name
+					label(for="add_phone", class="control-label") Phone
 					div
-						input(type="text", class="form-control", id="add_short_name")
+						input(type="text", class="form-control", id="add_phone")
 				div(class="form-group mdl-cell")
-					label(for="add_company_name", class="control-label") Company Name
+					label(for="add_email", class="control-label") Email
 					div
-						input(type="text", class="form-control", id="add_company_name")
+						input(type="text", class="form-control", id="add_email")
+				div(class="form-group mdl-cell")
+					label(for="add_address", class="control-label") Address
+					div
+						textarea(rows="3", class="form-control", id="add_address")
 				div(class="mdl-grid mdl-cell mdl-cell--12-col")
 					button(id="button_save", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored") Add
 		div(id="content_table", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid", style="overflow-x:auto")
 			table(class="full-width mdl-data-table mdl-js-data-table")
 				thead
 					tr
-						th No
 						th(class="") ID
-						th(class="mdl-data-table__cell--non-numeric") Logo
-						th(class="mdl-data-table__cell--non-numeric") Full Name
-						th(class="mdl-data-table__cell--non-numeric") Short Name
-						th(class="mdl-data-table__cell--non-numeric") Company Name
-						th(class="mdl-data-table__cell--non-numeric") Items
+						th(class="mdl-data-table__cell--non-numeric") Name
+						th(class="mdl-data-table__cell--non-numeric") Address
+						th(class="mdl-data-table__cell--non-numeric") Phone
+						th(class="mdl-data-table__cell--non-numeric") Email
 						th
 					tr
-						td(class="mdl-data-table__cell--non-numeric")
+						td(class="")
 							i(class="material-icons") search
-						td(class="")
-
 						td(class="mdl-data-table__cell--non-numeric")
-							
+							input(class="search", params="name")
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="full_name")
+							input(class="search", params="address")
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="short_name")
+							input(class="search", params="phone")
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="company_name")
-						td(class="")
-							
+							input(class="search", params="email")
 						td(class="mdl-data-table__cell--non-numeric", style="padding:0px 0px 0px;vertical-align: middle;")
 							button(id="search_clear", class="mdl-button mdl-js-button mdl-button--accent", title="Clear all")
 								i.material-icons clear
 						
 				tbody
-	script(src="js/brand.js")
+	script(src="js/vendor.js")

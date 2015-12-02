@@ -4,6 +4,7 @@ var YEAR = 2015;
 db.quotation = db.get('quotation_'+YEAR);
 db.items = db.get('items');
 db.brands = db.get('brands');
+db.vendors = db.get('vendors');
 db.stock = db.get('stock');
 db.users = db.get('users');
 db.groups = db.get('groups');
@@ -37,6 +38,22 @@ db.counters.find({name: "m_id"},
 		if(docs.length < 1){
 			db.counters.insert({
 				name: "m_id",
+				sequence_value: 0,
+		});
+	}
+ });
+ 
+db.vendors.index('v_id', {
+    unique: true
+});
+
+db.counters.find({name: "v_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "v_id",
 				sequence_value: 0,
 		});
 	}
