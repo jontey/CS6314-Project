@@ -13,9 +13,11 @@ var port = process.env.PORT || 8080;        // set our port
 // Database
 var db = require('./db');
 
+//Routes
 var quotation = require('./routes/quotation');
 var manufacturers = require('./routes/manufacturers');
 var items = require('./routes/items');
+var uploads = require('./routes/uploads');
 var app = express();
 
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -27,11 +29,10 @@ app.use(session({ secret: 'secret secret secret', resave: true, saveUninitialize
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/quotation', quotation);
 app.use('/manufacturers', manufacturers);
 app.use('/items', items);
+app.use('/uploads', uploads);
 
 app.listen(port);
 console.log('[API] listening on %s', port);

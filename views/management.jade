@@ -1,0 +1,75 @@
+extend index
+
+block content
+	div(class="mdl-grid demo-content")
+		div(id="content_input", class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
+			table(class="full-width mdl-data-table mdl-js-data-table")
+				thead
+					tr
+						th(class="mdl-data-table__cell--non-numeric") Date
+						th(class="mdl-data-table__cell--non-numeric") Quotation No
+						th(class="mdl-data-table__cell--non-numeric") By
+						th(class="mdl-data-table__cell--non-numeric") Customer
+						th(class="mdl-data-table__cell--non-numeric") Mfg
+						th(class="mdl-data-table__cell--non-numeric") Item
+						th Amount (RM)
+						th File
+						th
+				tr
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="mdl-data-table__cell--non-numeric")
+						input(class="")
+					td(class="")
+						input(class="")
+					td(class="")
+						
+					td(class="mdl-data-table__cell--non-numeric")
+						
+				tr
+					td(class="mdl-data-table__cell--non-numeric")
+						| 2015-11-09
+					td(class="mdl-data-table__cell--non-numeric")
+						| EA/Q/2534/15/YK
+					td(class="mdl-data-table__cell--non-numeric")
+						| YK
+					td(class="mdl-data-table__cell--non-numeric")
+						| PARVENU BASE (M) SDN. BHD.
+					td(class="mdl-data-table__cell--non-numeric")
+						| SERVOMEX
+					td(class="mdl-data-table__cell--non-numeric")
+						| 5200 MP
+					td(class="")
+						| 34866
+					td(class="")
+						a(href="#") 2534.xls
+					td(class="mdl-data-table__cell--non-numeric")
+						a(href="#") Edit
+				tr
+					td(class="mdl-data-table__cell--non-numeric")
+						| 2015-11-09
+					td(class="mdl-data-table__cell--non-numeric")
+						| EA/Q/2533/15/YK
+					td(class="mdl-data-table__cell--non-numeric")
+						| YK
+					td(class="mdl-data-table__cell--non-numeric")
+						| MEGA BIRU (M) SDN. BHD.
+					td(class="mdl-data-table__cell--non-numeric")
+						| SERVOMEX
+					td(class="mdl-data-table__cell--non-numeric")
+						| 5200 MP
+					td(class="")
+						| 34866
+					td(class="")
+						a(href="#") 2533.xls
+					td(class="mdl-data-table__cell--non-numeric")
+						a(href="#") Edit			
+	script(src="js/quotation.js")

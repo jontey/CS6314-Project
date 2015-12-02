@@ -1,0 +1,2 @@
+"api": nodemon api.js
+"web": modemon web.js

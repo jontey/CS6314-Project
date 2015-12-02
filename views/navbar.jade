@@ -1,0 +1,38 @@
+header(class="demo-header mdl-layout__header  mdl-color-text--grey-100")
+	div(class="mdl-layout__header-row")
+		span(class="mdl-layout-title")= title
+//Sidebar
+div(class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50")
+	header(class="demo-drawer-header")
+		img(src="images/user.jpg", class="demo-avatar")
+		div(class="demo-avatar-dropdown")
+			span
+				b hello@example.com
+					br
+				| Manager
+			div(class="mdl-layout-spacer")
+			button(id="accbtn", class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon")
+				i(class="material-icons", role="presentation") arrow_drop_down
+				span(class="visuallyhidden") Accounts
+			ul(class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect", for="accbtn")
+				li(class="mdl-menu__item") Profile
+				li(class="mdl-menu__item") Logout
+	nav(class="demo-navigation mdl-navigation mdl-color--blue-grey-800")
+		a(class="mdl-navigation__link", class={active: title==="Quotation"}, href="/quotation")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") assignment
+			| Quotation
+		a(class="mdl-navigation__link", class={active: title==="Inventory"}, href="/inventory")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") local_grocery_store
+			| Inventory
+		a(class="mdl-navigation__link", class={active: title==="Purchase Orders"}, href="/purchase")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") shopping_basket
+			| Purchase Orders
+		a(class="mdl-navigation__link", class={active: title==="Vendors"}, href="/vendor")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") store
+			| Vendors
+		a(class="mdl-navigation__link", class={active: title==="Brands"}, href="/brand")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") stars
+			| Brands
+		a(class="mdl-navigation__link", class={active: title==="Management"}, href="/management")
+			i(class="mdl-color-text--blue-grey-400 material-icons", role="presentation") supervisor_account
+			| Management

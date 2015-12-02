@@ -1,0 +1,247 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exact Analytical Quotation</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue-indigo.min.css" /> 
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+	input {
+		width: 100%;
+		padding: 0px;
+	}
+    </style>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-js-layout has-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header  mdl-color-text--grey-100">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Quotation</span>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" id="search">
+              <label class="mdl-textfield__label" for="search">Enter your query...</label>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <li class="mdl-menu__item">About</li>
+            <li class="mdl-menu__item">Contact</li>
+            <li class="mdl-menu__item">Legal information</li>
+          </ul>
+        </div>
+      </header>
+	  <!--- Sidebar ---->
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header">
+          <img src="images/user.jpg" class="demo-avatar">
+          <div class="demo-avatar-dropdown">
+            <span><b>hello@example.com</b><br />Manager</span>
+            <div class="mdl-layout-spacer"></div>
+            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+              <i class="material-icons" role="presentation">arrow_drop_down</i>
+              <span class="visuallyhidden">Accounts</span>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+              <li class="mdl-menu__item">Profile</li>
+              <li class="mdl-menu__item">Logout</li>
+            </ul>
+          </div>
+        </header>
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link active" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">assignment</i>Quotation</a>
+          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_grocery_store</i>Inventory</a>
+          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">supervisor_account</i>Management</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+          <div id="content_input" class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+			<table class="full-width mdl-data-table mdl-js-data-table">
+				<thead>
+					<tr>
+						<th class="mdl-data-table__cell--non-numeric">Date</th>
+						<th class="mdl-data-table__cell--non-numeric">Quotation No</th>
+						<th class="mdl-data-table__cell--non-numeric">By</th>
+						<th class="mdl-data-table__cell--non-numeric">Customer</th>
+						<th class="mdl-data-table__cell--non-numeric">Mfg</th>
+						<th class="mdl-data-table__cell--non-numeric">Item</th>
+						<th class="">Amount(RM)</th>
+						<th class="">File</th>
+						<th class=""></th>
+					</tr>
+				</thead>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class="mdl-data-table__cell--non-numeric"><input class=""/></td>
+						<td class=""><input class=""/></td>
+						<td class=""></td>
+						<td class="mdl-data-table__cell--non-numeric"></td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">2015-11-09</td>
+						<td class="mdl-data-table__cell--non-numeric">EA/Q/2534/15/YK</td>
+						<td class="mdl-data-table__cell--non-numeric">YK</td>
+						<td class="mdl-data-table__cell--non-numeric">PARVENU BASE (M) SDN. BHD.</td>
+						<td class="mdl-data-table__cell--non-numeric">SERVOMEX</td>
+						<td class="mdl-data-table__cell--non-numeric">5200 MP</td>
+						<td>34866</td>
+						<td class="mdl-data-table__cell--non-numeric"><a href="#">2534.xls</a></td>
+						<td class="mdl-data-table__cell--non-numeric"><a href="#">Edit</a></td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">2015-11-09</td>
+						<td class="mdl-data-table__cell--non-numeric">EA/Q/2533/15/YK</td>
+						<td class="mdl-data-table__cell--non-numeric">YK</td>
+						<td class="mdl-data-table__cell--non-numeric">MEGA BIRU (M) SDN. BHD.</td>
+						<td class="mdl-data-table__cell--non-numeric">SERVOMEX</td>
+						<td class="mdl-data-table__cell--non-numeric">5200 MP</td>
+						<td>34866</td>
+						<td class="mdl-data-table__cell--non-numeric"><a href="#">2533.xls</a></td>
+						<td class="mdl-data-table__cell--non-numeric"><a href="#">Edit</a></td>
+					</tr>
+			</table>
+          </div>
+		</div>
+	  </main>
+  </body>
+  <script>
+	//
+	var DEBUG_TRACE = true;
+	var BASE_URL = "http://localhost:8080/";
+	
+	$.ready(function (){
+		function create_table(quotation){
+			var class_table = "full-width mdl-data-table mdl-js-data-table";
+			var class_th = "mdl-data-table__cell--non-numeric";
+			var class_td = "mdl-data-table__cell--non-numeric";
+		}
+		
+		new MyAjaxRequest(BASE_URL+"quotation", {
+			data: {},
+			method: "GET",
+			onSuccess: function (r){
+				console.log(r);
+			},
+			onFailure: function (r){
+				console.log(r);
+			},
+		}, false);
+	});
+	
+	function MyAjaxRequest (url, opts, noRetry){
+		if (DEBUG_TRACE) logit ("myAjaxRequest: "+ url +"\n" + opts);
+		var wasSuccess = opts.onSuccess;
+		var wasFailure = opts.onFailure;
+		var retry = 0;
+		var delay = 5;
+		var show = true;
+		var noRetry = noRetry===true?true:false;
+		var silentTimer;
+
+		// new AjaxRequest(url, opts);
+		myRetry();
+		return;
+
+		function myRetry(){
+			++retry;
+			$.ajax({
+				url: url,
+				data: opts.data,
+				dataType: "json",
+				method: opts.method==null?"POST":opts.method,
+				success: mySuccess, 
+				error: myFailure
+			});
+			//delay = delay * 1.25;
+		}
+		function myFailure(){
+			var o = {};
+			o.ok = false;
+			o.errMsg = "AJAX Communication Failure";
+			wasFailure (o);
+		}
+		function mySuccess (rslt){
+			if (rslt.ok){
+				logit(rslt);
+				wasSuccess (rslt);
+			}
+		}
+
+		function silentRetry() {
+			clearTimeout(silentTimer);
+			myRetry();
+		}
+	}
+	
+	function logit (msg){
+		var now = new Date();
+		console.log (now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
+	}
+  </script>
+</html>

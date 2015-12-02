@@ -1,5 +1,5 @@
 var monk = require('monk');
-var db = monk('mongodb://localhost/quotation');
+var db = monk('mongodb://127.0.0.1/quotation');
 var YEAR = 2015;
 db.quotation = db.get('quotation_'+YEAR);
 db.manufacturers = db.get('manufacturers');

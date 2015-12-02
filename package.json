@@ -4,13 +4,14 @@
   "description": "Quotation Management System",
   "main": "index.js",
   "scripts": {
-		"start": "npm run api",
-		"api": "nodemon api.js"
+		"start": "concurrent \"npm run api\" \"npm run web\"",
+		"api": "nodemon api.js",
+		"web": "nodemon web.js"
   },
   "repository" :
 	  { "type" : "git",
 	    "url" : "https://github.com/jontey/CS6314-Project.git"
-	  }
+	  },
   "author": "Jonathan Tey",
   "license": "ISC",
   "dependencies": {
@@ -26,7 +27,12 @@
         "serve-favicon": "~2.2.1",
         "mongodb": "~2.0.33",
         "monk": "~1.0.1",       
-		"passport" : "~0.1.17",         
-		"passport-local" : "~0.1.6"
+		"passport" : "~0.1.17",
+		"concurrently" :"~1.0.0",
+		"express-http-proxy": "~0.6.0",
+		"url": "~0.11.0",
+		"request": "~2.67.0",
+		"passport-local" : "~0.1.6",
+		"multer": "~1.1.0"
     }
 }

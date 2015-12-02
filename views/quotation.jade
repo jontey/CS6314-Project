@@ -1,0 +1,68 @@
+extend index
+
+block content
+	div(class="mdl-grid demo-content")
+		div(class="mdl-cell mdl-cell--12-col mdl-grid")
+			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New quotation
+		div(id="content_add", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
+			div(class="form-group mdl-cell")
+				label(for="add_by", class="control-label") By
+				div
+					input(type="text", class="form-control", id="add_by")
+			div(class="form-group mdl-cell")
+				label(for="add_customer", class="control-label") Customer
+				div
+					input(type="text", class="form-control", id="add_customer")
+			div(class="form-group mdl-cell")
+				label(for="add_manufacturer", class="control-label") Manufacturer
+				div
+					input(type="text", class="form-control", id="add_manufacturer")
+			div(class="form-group mdl-cell")
+				label(for="add_item", class="control-label") Item
+				div
+					input(type="text", class="form-control", id="add_item")
+			div(class="form-group mdl-cell")
+				label(for="add_total", class="control-label") Amount
+				div
+					input(type="text", class="form-control", id="add_total")
+			div(class="mdl-grid mdl-cell mdl-cell--12-col")
+				button(id="button_save", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored") Add
+		div(id="content_table", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid", style="overflow-x:auto")
+			table(class="full-width mdl-data-table mdl-js-data-table")
+				thead
+					tr
+						th No
+						th(class="mdl-data-table__cell--non-numeric") Date
+						th(class="mdl-data-table__cell--non-numeric") Quotation No
+						th(class="mdl-data-table__cell--non-numeric") By
+						th(class="mdl-data-table__cell--non-numeric") Customer
+						th(class="mdl-data-table__cell--non-numeric") Manufacturer
+						th(class="mdl-data-table__cell--non-numeric") Item
+						th Amount (RM)
+						th File
+						th
+					tr
+						td(class="mdl-data-table__cell--non-numeric")
+							i(class="material-icons") search
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="date")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="quotation_number")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="by")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="customer")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="manufacturer")
+						td(class="")
+							input(class="search", params="item")
+						td(class="")
+							input(class="search", params="total")
+						td(class="mdl-data-table__cell--non-numeric")
+							
+						td(class="mdl-data-table__cell--non-numeric", style="padding:0px 0px 0px;vertical-align: middle;")
+							button(id="search_clear", class="mdl-button mdl-js-button mdl-button--accent", title="Clear all")
+								i.material-icons clear
+						
+				tbody
+	script(src="js/quotation.js")
