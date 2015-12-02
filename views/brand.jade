@@ -1,0 +1,58 @@
+extend index
+
+block content
+	div(class="mdl-grid demo-content")
+		div(class="mdl-cell mdl-cell--12-col mdl-grid")
+			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New brand
+		form(id="add_form", method="post", enctype="multipart/form-data")
+			div(id="content_add", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
+				div(class="form-group mdl-cell")
+					label(for="add_logo", class="control-label") Logo
+					input(type="file", id="add_logo")
+				div(class="form-group mdl-cell")
+					label(for="add_full_name", class="control-label") Full Name
+					div
+						input(type="text", class="form-control", id="add_full_name")
+				div(class="form-group mdl-cell")
+					label(for="add_short_name", class="control-label") Short Name
+					div
+						input(type="text", class="form-control", id="add_short_name")
+				div(class="form-group mdl-cell")
+					label(for="add_company_name", class="control-label") Company Name
+					div
+						input(type="text", class="form-control", id="add_company_name")
+				div(class="mdl-grid mdl-cell mdl-cell--12-col")
+					button(id="button_save", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored") Add
+		div(id="content_table", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid", style="overflow-x:auto")
+			table(class="full-width mdl-data-table mdl-js-data-table")
+				thead
+					tr
+						th No
+						th(class="") ID
+						th(class="mdl-data-table__cell--non-numeric") Logo
+						th(class="mdl-data-table__cell--non-numeric") Full Name
+						th(class="mdl-data-table__cell--non-numeric") Short Name
+						th(class="mdl-data-table__cell--non-numeric") Company Name
+						th(class="mdl-data-table__cell--non-numeric") Items
+						th
+					tr
+						td(class="mdl-data-table__cell--non-numeric")
+							i(class="material-icons") search
+						td(class="")
+							
+						td(class="mdl-data-table__cell--non-numeric")
+							
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="full_name")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="short_name")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="company_name")
+						td(class="")
+							
+						td(class="mdl-data-table__cell--non-numeric", style="padding:0px 0px 0px;vertical-align: middle;")
+							button(id="search_clear", class="mdl-button mdl-js-button mdl-button--accent", title="Clear all")
+								i.material-icons clear
+						
+				tbody
+	script(src="js/brand.js")

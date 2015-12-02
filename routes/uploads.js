@@ -28,4 +28,23 @@ router.get('/quotation/:year/:filename', function (req, res){
 	}
 );
 
+router.get('/manufacturer/:filename', function (req, res){
+	db.brands.find({
+			"logo.name": req.params.filename
+		},
+		function (err, docs){
+			if (err) {
+				//Send 404
+			} else {
+				if(docs.length < 1)
+					return;
+				if(docs[0].logo == null)
+					return;
+				var file = docs[0].logo;
+				res.download(file.url, file.name);
+			}
+	});
+	}
+);
+
 module.exports = router;

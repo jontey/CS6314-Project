@@ -2,8 +2,8 @@ var monk = require('monk');
 var db = monk('mongodb://127.0.0.1/quotation');
 var YEAR = 2015;
 db.quotation = db.get('quotation_'+YEAR);
-db.manufacturers = db.get('manufacturers');
 db.items = db.get('items');
+db.brands = db.get('brands');
 db.stock = db.get('stock');
 db.users = db.get('users');
 db.groups = db.get('groups');
@@ -26,7 +26,7 @@ db.counters.find({name: "q_id"},
 	}
  });
 
-db.manufacturers.index('m_id', {
+db.brands.index('m_id', {
     unique: true
 });
 

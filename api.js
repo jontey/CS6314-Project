@@ -15,7 +15,7 @@ var db = require('./db');
 
 //Routes
 var quotation = require('./routes/quotation');
-var manufacturers = require('./routes/manufacturers');
+var brands = require('./routes/brands');
 var items = require('./routes/items');
 var uploads = require('./routes/uploads');
 var app = express();
@@ -30,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.use('/quotation', quotation);
-app.use('/manufacturers', manufacturers);
+app.use('/brand', brands);
 app.use('/items', items);
 app.use('/uploads', uploads);
 

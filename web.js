@@ -48,7 +48,7 @@ app.get("/vendor", function (req, res){
 	res.render("management", {title: "Vendors"});
 });
 app.get("/brand", function (req, res){
-	res.render("management", {title: "Brands"});
+	res.render("brand", {title: "Brands"});
 });
 app.get("/management", function (req, res){
 	res.render("management", {title: "Management"});
