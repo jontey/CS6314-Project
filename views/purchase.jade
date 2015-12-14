@@ -1,0 +1,71 @@
+extend index
+
+block content
+	div(class="mdl-grid demo-content")
+		div(class="mdl-cell mdl-cell--12-col mdl-grid")
+			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New Purchase Order
+		div(id="content_add", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
+			div(class="form-group mdl-cell")
+				label(for="add_p_id", class="control-label") PO #
+				div
+					input(type="text", class="form-control", id="add_p_id")
+			div(class="form-group mdl-cell")
+				label(for="add_p_date", class="control-label") Date
+				div
+					input(type="text", class="form-control", id="add_p_date")
+			div(class="form-group mdl-cell")
+				label(for="add_vendor", class="control-label") Vendor
+				div
+					input(type="text", class="form-control", id="add_vendor")
+			div(class="form-group mdl-cell")
+				label(for="add_currency", class="control-label") Currency
+				div
+					input(type="text", class="form-control", id="add_currency")
+			div(class="form-group mdl-cell")
+				label(for="add_conversion", class="control-label") Conversion rate
+				div
+					input(type="text", class="form-control", id="add_conversion")
+			div(class="mdl-grid mdl-cell mdl-cell--12-col")
+				button(id="button_save", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored") Add
+		div(id="content_table", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid", style="overflow-x:auto")
+			table(class="full-width mdl-data-table mdl-js-data-table")
+				thead
+					tr
+						th No
+						th(class="mdl-data-table__cell--non-numeric") PO #
+						th(class="mdl-data-table__cell--non-numeric") Date
+						th(class="mdl-data-table__cell--non-numeric") Vendor
+						th(class="") Total items
+						th(class="mdl-data-table__cell--non-numeric") Currency
+						th(class="") Rate
+						th(class="") Cost
+						th(class="") Delivery Cost
+						th(class="") Retail
+						th
+					tr
+						td(class="mdl-data-table__cell--non-numeric")
+							i(class="material-icons") search
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="p_id")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="p_date")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="vendor")
+						td(class="")
+							input(class="search", params="total")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="currency")
+						td(class="")
+							input(class="search", params="conversion")
+						td(class="")
+							input(class="search", params="cost")
+						td(class="")
+							input(class="search", params="delivery")
+						td(class="")
+							input(class="search", params="retail")
+						td(class="mdl-data-table__cell--non-numeric", style="padding:0px 0px 0px;vertical-align: middle;")
+							button(id="search_clear", class="mdl-button mdl-js-button mdl-button--accent", title="Clear all")
+								i.material-icons clear
+						
+				tbody
+	script(src="js/purchase.js")

@@ -1,0 +1,64 @@
+doctype html
+html
+	head
+		- var default_title = "Exact Analytical Sdn Bhd";
+		title= title || default_title
+		
+		meta(charset="utf8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="description", content="Quotation and Inventory System")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		
+		// Add to homescreen for Chrome on Android
+		meta(name="mobile-web-app-capable", content="yes")
+		link(rel="icon", sizes="192x192", href="images/android-desktop.png")
+		
+		// Add to homescreen for Safari on iOS
+		meta(name="apple-mobile-web-app-capable", content="yes")
+		meta(name="apple-mobile-web-app-status-bar-style", content="black")
+		meta(name="apple-mobile-web-app-title", content="Material Design Lite")
+		link(rel="apple-touch-icon-precomposed", href="images/ios-desktop.png")
+		
+		//Favicon
+		link(rel="shortcut icon", href="images/favicon.png")
+		
+		//Scripts
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+		script(src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js")
+		script(src="js/common.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+		link(href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en", rel="stylesheet")
+		link(href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue-indigo.min.css", rel="stylesheet")
+		link(href="https://fonts.googleapis.com/icon?family=Material+Icons", rel="stylesheet")
+		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", rel="stylesheet")
+		link(href="css/styles.css", rel="stylesheet")
+		
+		//Custom styles
+		style.
+			form {
+				width: 380px;
+				margin: 4em auto;
+				padding: 2em 2em 2em;
+			}
+			#form_submit {
+				width: 100%;
+			}
+			.group {
+				margin-bottom: 15px;
+				margin-top: 15px;
+			}
+	body
+		div(class="demo-layout mdl-layout mdl-js-layout mdl-color--grey-100")
+			form(class="mdl-color--white mdl-shadow--2dp")
+				h1 Login
+				p(id="error", class="bg-danger")
+				div(class="group mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+					input(class="mdl-textfield__input", type="text", id="username")
+					label(class="mdl-textfield__label", for="username") Username
+				div(class="group mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+					input(class="mdl-textfield__input", type="password", id="password")
+					label(class="mdl-textfield__label", for="password") Password
+				div(class="group mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+					input(class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored", type="submit", id="form_submit", value="Login")
+		script(src="js/login.js")
