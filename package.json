@@ -35,6 +35,7 @@
 		"passport-local" : "~1.0.0",
 		"fs" : "~0.0.2",
 		"jwt-simple" : "~0.4.0",
+		"compression" : "~1.6.0",
 		"multer": "~1.1.0"
     }
 }

@@ -6,6 +6,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var request = require('request');
+var compress = require('compression');
+ 
 var url = require('url');
 
 var port = process.env.PORT || 8000;        // set our port
@@ -27,6 +29,7 @@ app.get('/api/*', function (req, res) {
     req.pipe(request("https://127.0.0.1:8080/api/v1/"+req.params[0])).pipe(res);
 });
 
+app.use(compress()); 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

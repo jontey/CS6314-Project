@@ -103,7 +103,7 @@ router.post('/edit/:id', function(req, res) {
 			edit_opts[TABLE_HEADERS[i]] = req.body[TABLE_HEADERS[i]];
 		}
 	}
-    db.po.update({ po_id: req.params.id },
+    db.po.update({ po_id: parseInt(req.params.id) },
 		{ $set: edit_opts},
 		function (err, doc){
 			if(err) {
@@ -144,10 +144,10 @@ router.post('/update', function(req,res){
 			},
 			{
 				$set: {
-					total: docs.length,
-					cost: cost,
-					delivery: delivery,
-					retail: retail
+					total: ""+docs.length,
+					cost: ""+cost,
+					delivery: ""+delivery,
+					retail: ""+retail
 				}
 			},
 			function (err, doc){

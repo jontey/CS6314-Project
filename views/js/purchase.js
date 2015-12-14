@@ -73,44 +73,44 @@ function create_table(q){
 			$(this).text("Save");
 			$(this).attr("param", "save");
 			
-			var edit_extra = document.createElement("td");
-			var edit_extra_form = document.createElement("form");
-			edit_extra.className = class_td+" edit";
-			edit_extra.colSpan = TABLE_HEADERS.length;
-			edit_extra_form.method = "post";
-			edit_extra_form.enctype = "multipart/form-data";
-			edit_extra_form.innerHTML = "<p>Add file: <input width='200px' type='file' name='file'/> \
-										 <input type='hidden' name='name' value='"+row+"' /> </p> \
-										 <p><input width='100px' type='submit' value='Upload'/></p>";
-			edit_extra.appendChild(edit_extra_form);
-			$("tr[row='"+row+"']").after(edit_extra);
-			$(edit_extra_form).submit(function(e){
-				e.preventDefault();
-				var data = new FormData();
-				data.append("file", $("form")[0].file.files[0]);
-				data.append("name", $("form")[0].name.value);
-				console.log(data);
-				$.ajax({
-					url: BASE_URL+"po/upload/"+row, 
-					data: data,
-					headers: {
-						"x-access-token": localStorage.getItem("token") || "",
-						"x-key": localStorage.getItem("user") || ""
-					},
-					cache: false,
-					contentType: false,
-					processData: false,
-					method: "POST",
-					success: function (rslt){
-						console.log(rslt);
-						PurchaseAjaxRequest({});
-					},
-					error: function (rslt){
-						console.log(rslt);
-					}
-				}, false);
-				return false;
-			});
+			// var edit_extra = document.createElement("td");
+			// var edit_extra_form = document.createElement("form");
+			// edit_extra.className = class_td+" edit";
+			// edit_extra.colSpan = TABLE_HEADERS.length;
+			// edit_extra_form.method = "post";
+			// edit_extra_form.enctype = "multipart/form-data";
+			// edit_extra_form.innerHTML = "<p>Add file: <input width='200px' type='file' name='file'/> \
+										 // <input type='hidden' name='name' value='"+row+"' /> </p> \
+										 // <p><input width='100px' type='submit' value='Upload'/></p>";
+			// edit_extra.appendChild(edit_extra_form);
+			// $("tr[row='"+row+"']").after(edit_extra);
+			// $(edit_extra_form).submit(function(e){
+				// e.preventDefault();
+				// var data = new FormData();
+				// data.append("file", $("form")[0].file.files[0]);
+				// data.append("name", $("form")[0].name.value);
+				// console.log(data);
+				// $.ajax({
+					// url: BASE_URL+"po/upload/"+row, 
+					// data: data,
+					// headers: {
+						// "x-access-token": localStorage.getItem("token") || "",
+						// "x-key": localStorage.getItem("user") || ""
+					// },
+					// cache: false,
+					// contentType: false,
+					// processData: false,
+					// method: "POST",
+					// success: function (rslt){
+						// console.log(rslt);
+						// PurchaseAjaxRequest({});
+					// },
+					// error: function (rslt){
+						// console.log(rslt);
+					// }
+				// }, false);
+				// return false;
+			// });
 			
 			//Undo button
 			var undo = document.createElement("a");

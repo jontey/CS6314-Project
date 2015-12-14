@@ -39,6 +39,10 @@ var auth = {
 			if(err) {
 				throw err;
 			} else {
+				if(doc == null){
+					cb(false);
+					return;
+				}
 				var salt = new Buffer(doc.salt);
 				var passwordHash = encodePassword(password, salt);
 				if(authenticate(passwordHash.toString("hex"), doc.password)){

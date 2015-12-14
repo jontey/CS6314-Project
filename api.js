@@ -7,6 +7,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var compress = require('compression')
 var router = express.Router();
 
 var port = process.env.PORT || 8080;        // set our port
@@ -30,6 +31,7 @@ var user = require('./routes/user');
 var auth = require('./routes/auth');
 var app = express();
 
+app.use(compress()); 
 app.set("trust proxy", 1);
 // app.use(cookieParser()); // read cookies (needed for auth)
 app.use(logger('dev'));
