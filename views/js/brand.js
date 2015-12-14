@@ -5,7 +5,6 @@
 var DEBUG_TRACE = true;
 var BASE_URL = "api/";
 var TABLE_HEADERS = [
-		["No", "no"],
 		["ID", "m_id"],
 		["Logo", "logo"],
 		["Full Name", "full_name"],
@@ -28,8 +27,8 @@ function create_table(q){
 		m+= "<tr row=\""+brand["m_id"]+"\">";
 		for(var j=0; j<TABLE_HEADERS.length; j++){
 			var header = TABLE_HEADERS[j][1];
-			if(header == "no"){
-				m += "<td row=\""+brand["m_id"]+"\">"+(i+1)+"</td>";
+			if(header == "m_id"){
+				m += "<td row=\""+brand["m_id"]+"\">"+brand[header]+"</td>";
 			} else if(header == "edit"){
 				m += "<td row=\""+brand["m_id"]+"\"><a href=\"#\" class=\"edit_row\" row=\""+brand["m_id"]+"\" param=\"edit\">Edit</a></td>";
 			} else if(brand[header] != null){
@@ -92,6 +91,10 @@ function create_table(q){
 				$.ajax({
 					url: BASE_URL+"brand/upload/"+row, 
 					data: data,
+					headers: {
+						"x-access-token": localStorage.getItem("token") || "",
+						"x-key": localStorage.getItem("user") || ""
+					},
 					cache: false,
 					contentType: false,
 					processData: false,
@@ -182,63 +185,10 @@ function BrandAjaxRequest(data){
 	}, false);
 }
 
-function MyAjaxRequest (url, opts, noRetry){
-	if (DEBUG_TRACE) logit ("myAjaxRequest: "+ url +"\n" + opts);
-	console.log(opts);
-	var wasSuccess = opts.onSuccess;
-	var wasFailure = opts.onFailure;
-	var beforeSend = opts.beforeSend;
-	var retry = 0;
-	var delay = 5;
-	var show = true;
-	var noRetry = noRetry===true?true:false;
-	var silentTimer;
-
-	myRetry();
-	return;
-
-	function myRetry(){
-		++retry;
-		$.ajax({
-			url: url,
-			data: opts.data,
-			dataType: "json",
-			beforeSend: beforeSend,
-			method: opts.method==null?"POST":opts.method,
-			success: mySuccess, 
-			error: myFailure
-		});
-		//delay = delay * 1.25;
-	}
-	function myFailure(xhr, text, err){
-		console.log(text, err);
-		var o = {};
-		o.ok = false;
-		o.errMsg = "AJAX Communication Failure";
-		wasFailure (o);
-	}
-	function mySuccess (rslt){
-		if (rslt.ok){
-			logit(rslt);
-			wasSuccess (rslt);
-		}
-	}
-
-	function silentRetry() {
-		clearTimeout(silentTimer);
-		myRetry();
-	}
-}
-
-function logit (msg){
-	var now = new Date();
-	console.log (now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
-}
-
 //Draw table
 	new MyAjaxRequest(BASE_URL+"brand/", {
 		data: {},
-		method: "GET",
+		method: "POST",
 		onSuccess: function (rslt){
 			console.log(rslt);
 			if(rslt.ok){
@@ -296,6 +246,10 @@ $("#add_form").submit(function(e){
 	$.ajax({
 		url: BASE_URL+"brand/add/", 
 		data: add_items,
+		headers: {
+			"x-access-token": localStorage.getItem("token") || "",
+			"x-key": localStorage.getItem("user") || ""
+		},
 		cache: false,
 		contentType: false,
 		processData: false,

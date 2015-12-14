@@ -34,9 +34,11 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
 	var search_opts = {};
 	var TABLE_HEADERS = [
-		"full_name",
-		"short_name",
-		"company_name"
+		"name",
+		"address",
+		"contact",
+		"phone",
+		"email",
 	];
 	for(var i=0; i<TABLE_HEADERS.length; i++){
 		if(req.body[TABLE_HEADERS[i]] != null){

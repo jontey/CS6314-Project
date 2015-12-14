@@ -8,6 +8,7 @@ var TABLE_HEADERS = [
 	"v_id",
 	"name",
 	"address",
+	"contact",
 	"phone",
 	"email",
 	"edit"
@@ -148,59 +149,6 @@ function VendorAjaxRequest(data){
 			document.getElementById("content_table").getElementsByTagName('tbody')[0].innerHTML = "<tr><td colspan="+TABLE_HEADERS.length+"><center><div class=\"mdl-spinner mdl-js-spinner is-active\"></div></center></td></tr>";
 		}
 	}, false);
-}
-
-function MyAjaxRequest (url, opts, noRetry){
-	if (DEBUG_TRACE) logit ("myAjaxRequest: "+ url +"\n" + opts);
-	console.log(opts);
-	var wasSuccess = opts.onSuccess;
-	var wasFailure = opts.onFailure;
-	var beforeSend = opts.beforeSend;
-	var retry = 0;
-	var delay = 5;
-	var show = true;
-	var noRetry = noRetry===true?true:false;
-	var silentTimer;
-
-	myRetry();
-	return;
-
-	function myRetry(){
-		++retry;
-		$.ajax({
-			url: url,
-			data: opts.data,
-			dataType: "json",
-			beforeSend: beforeSend,
-			method: opts.method==null?"POST":opts.method,
-			success: mySuccess, 
-			error: myFailure
-		});
-		//delay = delay * 1.25;
-	}
-	function myFailure(xhr, text, err){
-		console.log(text, err);
-		var o = {};
-		o.ok = false;
-		o.errMsg = "AJAX Communication Failure";
-		wasFailure (o);
-	}
-	function mySuccess (rslt){
-		if (rslt.ok){
-			logit(rslt);
-			wasSuccess (rslt);
-		}
-	}
-
-	function silentRetry() {
-		clearTimeout(silentTimer);
-		myRetry();
-	}
-}
-
-function logit (msg){
-	var now = new Date();
-	console.log (now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
 }
 
 //Draw table

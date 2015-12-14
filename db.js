@@ -2,13 +2,14 @@ var monk = require('monk');
 var db = monk('mongodb://127.0.0.1/quotation');
 var YEAR = 2015;
 db.quotation = db.get('quotation_'+YEAR);
-db.items = db.get('items');
+db.inventory = db.get('inventory');
 db.brands = db.get('brands');
 db.vendors = db.get('vendors');
 db.stock = db.get('stock');
 db.users = db.get('users');
 db.groups = db.get('groups');
 db.customer = db.get('customers');
+db.po = db.get('po');
 db.counters = db.get('counter');
 
 db.quotation.index('q_id', {
@@ -59,7 +60,7 @@ db.counters.find({name: "v_id"},
 	}
  });
 
-db.items.index('i_id', {
+db.inventory.index('i_id', {
     unique: true
 });
 
@@ -74,6 +75,38 @@ db.counters.find({name: "i_id"},
 		});
 	}
  });
+ 
+db.users.index('u_id', {
+    unique: true
+});
+
+db.counters.find({name: "u_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "u_id",
+				sequence_value: 0,
+		});
+	}
+});
+ 
+db.po.index('po_id', {
+    unique: true
+});
+
+db.counters.find({name: "po_id"},
+	{},
+	function (err, docs){
+		if(err) throw err;
+		if(docs.length < 1){
+			db.counters.insert({
+				name: "po_id",
+				sequence_value: 0,
+		});
+	}
+});
 
 db.getNextSequenceValue = function (sequenceName, cb){
 	db.counters.findAndModify({

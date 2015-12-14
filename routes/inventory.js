@@ -6,54 +6,35 @@ var path = require("path");
 var db = require('./../db');
 
 /*
- * GET quotation/
- * Return latest 25 quotations
- */
-router.get('/', function(req, res) {
-    db.quotation.find({},
-		{limit: 25,
-		 sort: {q_id: -1}
-		},
-		function (err, docs){
-			if (err) {
-				res.send({
-					ok: false,
-					errMsg: err,
-				});
-			} else {
-				res.send({
-					ok: true,
-					quotations: docs,
-				});
-			}
-	});
-});
-
-/*
- * POST quotation/
- * Search quotation with params
+ * POST inventory/
+ * Search inventory with params
  */
 router.post('/', function(req, res) {
 	var search_opts = {};
 	var TABLE_HEADERS = [
-		"date",
-		"quotation_number",
-		"by",
-		"customer",
-		"manufacturer",
-		"item",
-		"total"
+		"i_id",
+		"p_id",
+		"p_date",
+		"brand",
+		"name",
+		"branch",
+		"serial",
+		"landed_cost",
+		"retail",
+		"status",
+		"notes"
 	];
+
 	for(var i=0; i<TABLE_HEADERS.length; i++){
 		if(req.body[TABLE_HEADERS[i]] != null){
 			search_opts[TABLE_HEADERS[i]] = new RegExp(req.body[TABLE_HEADERS[i]], "i");
 		}
 	}
 	console.log(search_opts);
-    db.quotation.find(
+    db.inventory.find(
 		search_opts,
 		{limit: 25,
-		 sort: {q_id: -1}
+		 sort: {i_id: -1}
 		},
 		function (err, docs){
 			if (err) {
@@ -64,56 +45,32 @@ router.post('/', function(req, res) {
 			} else {
 				res.send({
 					ok: true,
-					quotations: docs,
+					items: docs,
 				});
 			}
 	});
 });
-
 /*
- * GET quotation/:limit/:first
- */
-router.get('/:limit/:first', function(req, res) {
-    db.quotation.find({q_id: {$gt: parseInt(req.params.first)}},
-		{limit: req.params.limit},
-		function (err, docs){
-			if (err) {
-				res.send({
-					ok: false,
-					errMsg: err,
-				});
-			} else {
-				res.send({
-					ok: true,
-					quotations: docs,
-				});
-			}
-	});
-});
-
-function pad(num, size) {
-    var s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
-}
-
-/*
- * POST quotation/add/
+ * POST inventory/add/
  * items is an array
  */
 router.post('/add/', function(req, res) {
-	db.getNextSequenceValue("q_id");
-	db.counters.findOne({name: "q_id"}).on("success", function (doc){
-		db.quotation.insert({
-				"q_id": doc.sequence_value,
-				"date": req.body.date,
-				"quotation_number": "EA/Q/"+pad(doc.sequence_value, 4)+"/15/"+req.body.by,
-				"by": req.body.by,
-				"customer": req.body.customer,
-				"manufacturer": req.body.manufacturer,
-				"item": req.body.item,
-				"total": req.body.total,
-				"file": []
+	db.getNextSequenceValue("i_id");
+	db.counters.findOne({name: "i_id"}).on("success", function (doc){
+		db.inventory.insert({
+				"i_id": doc.sequence_value,
+				"p_id": req.body.p_id,
+				"p_date": req.body.p_date,
+				"brand": req.body.brand,
+				"name": req.body.name,
+				"branch": req.body.branch,
+				"serial": req.body.serial,
+				"unit_cost": req.body.unit_cost,
+				"delivery": req.body.delivery,
+				"tax_cost": req.body.tax_cost,
+				"markup": req.body.markup,
+				"status": req.body.status,
+				"notes": req.body.notes
 			},
 			function (err, doc) {
 				if (err) {
@@ -124,7 +81,7 @@ router.post('/add/', function(req, res) {
 				} else {
 					res.send({
 						ok: true,
-						quotations: [doc],
+						items: [doc],
 					});
 				}
 			});
@@ -132,17 +89,31 @@ router.post('/add/', function(req, res) {
 });
 
 /*
- * POST quotation/edit/:id
+ * POST inventory/edit/:id
  */
 router.post('/edit/:id', function(req, res) {
-    db.quotation.update({ q_id: parseInt(req.params.id) },
-						{ $set:{
-							"by": req.body.by,
-							"customer": req.body.customer,
-							"manufacturer": req.body.manufacturer,
-							"item": req.body.item,
-							"total": req.body.total
-						}},
+	var save_table = [
+		"p_id",
+		"p_date",
+		"brand",
+		"name",
+		"branch",
+		"serial",
+		"unit_cost",
+		"delivery",
+		"tax_cost",
+		"markup",
+		"status",
+		"notes"
+	];
+	var set_opts = {};
+	for(var i=0; i<save_table.length; i++){
+		if(req.body[save_table[i]] != null){
+			set_opts[save_table[i]] = req.body[save_table[i]];
+		}
+	}
+    db.inventory.update({ i_id: parseInt(req.params.id) },
+						{ $set: set_opts},
 						function (err, doc){
 							if(err) {
 								console.log(err);
@@ -153,58 +124,11 @@ router.post('/edit/:id', function(req, res) {
 							} else {
 								res.send({
 									ok: true,
-									quotations: [doc],
+									items: [doc],
 								});
 							}
 						});
 });
-
-//Upload settings
-var uploads = multer({
-	storage: multer.diskStorage({
-			destination: './uploads/quotation/2015'
-		}),
-	limits: {
-		files: 1
-	}
-});
-
-/*
- * POST quotation/upload/:id
- */
-router.post('/upload/:id', uploads.single("file"), function(req, res) {
-	console.log(req.params.id, req.body, req.file);
-	if(req.file){
-		db.quotation.update({q_id: parseInt(req.params.id) },
-							{
-								$push:{
-									file:{
-										ext: path.extname(req.file.originalname),
-										url: req.file.destination+"/"+req.file.filename,
-										dest: req.file.destination,
-										name: req.file.filename,
-										mime: req.file.mimetype,
-										size: req.file.size
-									}
-								}
-							},
-							function (err, doc){
-								if(err) {
-									console.log(err);
-									res.send({
-										ok: false,
-										errMsg: err
-									});
-								} else {
-									res.send({
-										ok: true,
-										quotations: [doc],
-									});
-								}
-							});
-	}
-});
-
 
 
 module.exports = router;

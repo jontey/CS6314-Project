@@ -5,17 +5,32 @@
 var DEBUG_TRACE = true;
 var BASE_URL = "api/";
 var TABLE_HEADERS = [
-		["No", "no"],
-		["Date", "date"],
-		["Quotation No", "quotation_number"],
-		["By", "by"],
-		["Customer", "customer"],
-		["Manufacturer", "manufacturer"],
-		["Item", "item"],
-		["Amount (RM)", "total"],
-		["File", "file"],
-		["", "edit"]
-	];
+	"i_id",
+	"p_id",
+	"p_date",
+	"brand",
+	"name",
+	"serial",
+	"landed_cost",
+	"retail",
+	"status",
+	"notes",
+	"edit"
+];
+var save_table = [
+	"p_id",
+	"p_date",
+	"brand",
+	"name",
+	"branch",
+	"serial",
+	"unit_cost",
+	"delivery",
+	"tax_cost",
+	"markup",
+	"status",
+	"notes"
+];
 
 function create_table(q){
 	var class_table = "full-width mdl-data-table mdl-js-data-table";
@@ -26,29 +41,30 @@ function create_table(q){
 	
 	//Input data
 	for(var i=0; i<q.length; i++){
-		var quotation = q[i];
-		m+= "<tr row=\""+quotation["q_id"]+"\">";
+		var item = q[i];
+		m+= "<tr row=\""+item["i_id"]+"\">";
 		for(var j=0; j<TABLE_HEADERS.length; j++){
-			var header = TABLE_HEADERS[j][1];
-			if(header == "no"){
-				m += "<td row=\""+quotation["q_id"]+"\">"+(i+1)+"</td>";
+			var header = TABLE_HEADERS[j];
+			if(header == "i_id"){
+				m += "<td row=\""+item["i_id"]+"\">"+item["i_id"]+"</td>";
 			} else if(header == "edit"){
-				m += "<td row=\""+quotation["q_id"]+"\"><a href=\"#\" class=\"edit_row\" row=\""+quotation["q_id"]+"\" param=\"edit\">Edit</a></td>";
-			} else if(quotation[header] != null){
-				if(header == "total"){
-					m += "<td row=\""+quotation["q_id"]+"\" id=\""+header+"_"+quotation["q_id"]+"\">"+quotation[header]+"</td>";
-				} else if(header == "file"){
-					var total_files = quotation.file.length;
-					if(total_files < 1){
-						m += "<td row=\""+quotation["q_id"]+"\" id=\""+header+"_"+quotation["q_id"]+"\"></td>";
-					} else {
-						m += "<td row=\""+quotation["q_id"]+"\" id=\""+header+"_"+quotation["q_id"]+"\"><a href=\""+BASE_URL+quotation[header][total_files-1].url+"\" >"+quotation["q_id"]+quotation[header][total_files-1].ext+"</a></td>";
-					}
-				} else {
-					m += "<td class=\""+class_td+"\" row=\""+quotation["q_id"]+"\" id=\""+header+"_"+quotation["q_id"]+"\">"+quotation[header]+"</td>";
-				}
+				m += "<td row=\""+item["i_id"]+"\"><a href=\"#\" class=\"edit_row\" row=\""+item["i_id"]+"\" param=\"edit\">Edit</a>";
+				m += "<input id=\""+item["i_id"]+"_unit_cost\" hidden value=\""+item["unit_cost"]+"\" />";
+				m += "<input id=\""+item["i_id"]+"_delivery\" hidden value=\""+item["delivery"]+"\" />";
+				m += "<input id=\""+item["i_id"]+"_tax_cost\" hidden value=\""+item["tax_cost"]+"\" />";
+				m += "<input id=\""+item["i_id"]+"_markup\" hidden value=\""+item["markup"]+"\" />";
+				m += "</td>";
+			} else if(header == "landed_cost"){
+				var total = parseFloat(item["unit_cost"])+parseFloat(item["delivery"])+parseFloat(item["tax_cost"]);
+				m += "<td row=\""+item["i_id"]+"\" id=\""+header+"_"+item["i_id"]+"\">"+total+"</td>";
+			} else if (header == "retail"){
+				var cost = parseFloat(item["unit_cost"])+parseFloat(item["delivery"])+parseFloat(item["tax_cost"]);
+				var retail = ((parseFloat(item["markup"])/100)+1) * cost;
+				m += "<td row=\""+item["i_id"]+"\" id=\""+header+"_"+item["i_id"]+"\">"+retail+"</td>";
+			} else if(item[header] != null){
+				m += "<td class=\""+class_td+"\" row=\""+item["i_id"]+"\" id=\""+header+"_"+item["i_id"]+"\">"+item[header]+"</td>";
 			} else {
-				m+= "<td row=\""+quotation["q_id"]+"\" id=\""+header+"_"+quotation["q_id"]+"\"></td>";
+				m+= "<td row=\""+item["i_id"]+"\" id=\""+header+"_"+item["i_id"]+"\"></td>";
 			}
 		}
 		m+= "</tr>";
@@ -60,12 +76,10 @@ function create_table(q){
 		var row = $(this).attr("row");
 		if($(this).attr("param") == "edit"){
 			for(var i=0; i<TABLE_HEADERS.length; i++){
-				var header = TABLE_HEADERS[i][1];
+				var header = TABLE_HEADERS[i];
 				switch(header){
-					case "no":
-					case "date":
-					case "quotation_number":
-					case "file":
+					case "landed_cost":
+					case "retail":
 					case "edit":
 						break;
 					default:
@@ -81,40 +95,22 @@ function create_table(q){
 			$(this).text("Save");
 			$(this).attr("param", "save");
 			
+			var unit_cost = $("#"+row+"_unit_cost").val();
+			var delivery = $("#"+row+"_delivery").val();
+			var tax_cost = $("#"+row+"_tax_cost").val();
+			var markup = $("#"+row+"_markup").val();
 			var edit_extra = document.createElement("td");
-			var edit_extra_form = document.createElement("form");
+			// var edit_extra_form = document.createElement("form");
 			edit_extra.className = class_td+" edit";
 			edit_extra.colSpan = TABLE_HEADERS.length;
-			edit_extra_form.method = "post";
-			edit_extra_form.enctype = "multipart/form-data";
-			edit_extra_form.innerHTML = "<p>Add file: <input width='200px' type='file' name='file'/> \
-										 <input type='hidden' name='name' value='"+row+"' /> </p> \
-										 <p><input width='100px' type='submit' value='Upload'/></p>";
-			edit_extra.appendChild(edit_extra_form);
+			// edit_extra_form.method = "post";
+			// edit_extra_form.enctype = "multipart/form-data";
+			edit_extra.innerHTML = "<table><tr><td>Unit Cost: </td><td><input style='width:200px' type='text' id='edit_"+row+"_unit_cost' value='"+unit_cost+"'/></td></tr> \
+									<tr><td>Delivery: </td><td><input style='width:200px' type='text' id='edit_"+row+"_delivery' value='"+delivery+"'/></td></tr> \
+									<tr><td>Tax Cost: </td><td><input style='width:200px' type='text' id='edit_"+row+"_tax_cost' value='"+tax_cost+"'/></td></tr> \
+									<tr><td>Markup %: </td><td><input style='width:200px' type='text' id='edit_"+row+"_markup' value='"+markup+"'/></td></tr>";
+			// edit_extra.appendChild(edit_extra_form);
 			$("tr[row='"+row+"']").after(edit_extra);
-			$(edit_extra_form).submit(function(e){
-				e.preventDefault();
-				var data = new FormData();
-				data.append("file", $("form")[0].file.files[0]);
-				data.append("name", $("form")[0].name.value);
-				console.log(data);
-				$.ajax({
-					url: BASE_URL+"quotation/upload/"+row, 
-					data: data,
-					cache: false,
-					contentType: false,
-					processData: false,
-					method: "POST",
-					success: function (rslt){
-						console.log(rslt);
-						QuotationAjaxRequest({});
-					},
-					error: function (rslt){
-						console.log(rslt);
-					}
-				}, false);
-				return false;
-			});
 			
 			//Undo button
 			var undo = document.createElement("a");
@@ -122,18 +118,20 @@ function create_table(q){
 			undo.href = "#";
 			$(this).after(undo);
 			$(undo).click(function(){
-				QuotationAjaxRequest({});
+				InventoryAjaxRequest({});
 			});
 		} else {
 			var add_items = {};
-			for(var i=0; i<TABLE_HEADERS.length; i++){
-				var header = TABLE_HEADERS[i][1];
+			for(var i=0; i<save_table.length; i++){
+				var header = save_table[i];
 				switch(header){
-					case "no":
-					case "date":
-					case "quotation_number":
-					case "file":
 					case "edit":
+						break;
+					case "unit_cost":
+					case "delivery":
+					case "tax_cost":
+					case "markup":
+						add_items[header] = $("#edit_"+row+"_"+header).val();
 						break;
 					default:
 						var value = $("#"+header+"_"+row+" > :input").val();
@@ -142,18 +140,18 @@ function create_table(q){
 						break;
 				}
 			}
-			
+			console.log(add_items);
 			$("td[row='"+row+"']").removeClass("edit");
 			$(this).text("Edit");
 			$(this).attr("param", "edit");
 			
-			new MyAjaxRequest(BASE_URL+"quotation/edit/"+row, {
+			new MyAjaxRequest(BASE_URL+"inventory/edit/"+row, {
 				data: add_items,
 				method: "POST",
 				onSuccess: function (rslt){
 					console.log(rslt);
 					if(rslt.ok){
-						QuotationAjaxRequest({});
+						InventoryAjaxRequest({});
 					} else {
 						//Display error
 						if(DEBUG_TRACE) console.log(rslt.errMsg);
@@ -170,15 +168,15 @@ function create_table(q){
 	});
 }
 
-function QuotationAjaxRequest(data){
-	new MyAjaxRequest(BASE_URL+"quotation/", {
+function InventoryAjaxRequest(data){
+	new MyAjaxRequest(BASE_URL+"inventory/", {
 			data: data,
 			method: "POST",
 			onSuccess: function (rslt){
 				console.log(rslt);
 				if(rslt.ok){
-					if(rslt.quotations)
-						create_table(rslt.quotations);
+					if(rslt.items)
+						create_table(rslt.items);
 				} else {
 					//Display error
 					if(DEBUG_TRACE) console.log(rslt.errMsg);
@@ -193,81 +191,8 @@ function QuotationAjaxRequest(data){
 		}, false);
 }
 
-function MyAjaxRequest (url, opts, noRetry){
-	return;
-	if (DEBUG_TRACE) logit ("myAjaxRequest: "+ url +"\n" + opts);
-	console.log(opts);
-	var wasSuccess = opts.onSuccess;
-	var wasFailure = opts.onFailure;
-	var beforeSend = opts.beforeSend;
-	var retry = 0;
-	var delay = 5;
-	var show = true;
-	var noRetry = noRetry===true?true:false;
-	var silentTimer;
-
-	myRetry();
-	return;
-
-	function myRetry(){
-		++retry;
-		$.ajax({
-			url: url,
-			data: opts.data,
-			dataType: "json",
-			beforeSend: beforeSend,
-			method: opts.method==null?"POST":opts.method,
-			success: mySuccess, 
-			error: myFailure
-		});
-		//delay = delay * 1.25;
-	}
-	function myFailure(xhr, text, err){
-		console.log(text, err);
-		var o = {};
-		o.ok = false;
-		o.errMsg = "AJAX Communication Failure";
-		wasFailure (o);
-	}
-	function mySuccess (rslt){
-		if (rslt.ok){
-			logit(rslt);
-			wasSuccess (rslt);
-		}
-	}
-
-	function silentRetry() {
-		clearTimeout(silentTimer);
-		myRetry();
-	}
-}
-
-function logit (msg){
-	var now = new Date();
-	console.log (now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
-}
-
 //Draw table
-	new MyAjaxRequest(BASE_URL+"quotation/", {
-		data: {},
-		method: "GET",
-		onSuccess: function (rslt){
-			console.log(rslt);
-			if(rslt.ok){
-				if(rslt.quotations)
-					create_table(rslt.quotations);
-			} else {
-				//Display error
-				if(DEBUG_TRACE) console.log(rslt.errMsg);
-			}
-		},
-		onFailure: function (rslt){
-			console.log(rslt);
-		},
-		beforeSend: function (xhr){
-			document.getElementById("content_table").getElementsByTagName('tbody')[0].innerHTML = "<tr><td colspan="+TABLE_HEADERS.length+"><center><div class=\"mdl-spinner mdl-js-spinner is-active\"></div></center></td></tr>";
-		}
-	}, false);
+	InventoryAjaxRequest({});
 	
 	$("#content_add").hide();
 	$("#button_add").click(function(){
@@ -275,7 +200,7 @@ function logit (msg){
 	});
 	$("#search_clear").click(function(){
 		$(".search").val("");
-		QuotationAjaxRequest({});
+		InventoryAjaxRequest({});
 	});
 	
 		
@@ -287,29 +212,41 @@ function logit (msg){
 				search[search_boxes[i].getAttribute("params")] = search_boxes[i].value;
 			}
 		}
-		QuotationAjaxRequest(search);
+		InventoryAjaxRequest(search);
 	});
+	
+	//TODO - update landed cost and retail
 	
 	$("#button_save").click(function(){
 		var add_items = {};
-		for(var i=0; i<TABLE_HEADERS.length; i++){
-			var header = TABLE_HEADERS[i][1];
+		for(var i=0; i<save_table.length; i++){
+			var header = save_table[i];
 			if(document.getElementById("add_"+header) != null){
 				add_items[header] = document.getElementById("add_"+header).value;
 			}
 		}
-		//Insert current date
-		add_items.date = Date.today().toString("yyyy-M-d");
 		console.log(add_items);
 
-		new MyAjaxRequest(BASE_URL+"quotation/add/", {
+		new MyAjaxRequest(BASE_URL+"inventory/add/", {
 			data: add_items,
 			method: "POST",
 			onSuccess: function (rslt){
 				console.log(rslt);
 				if(rslt.ok){
 					$("#content_add").hide(400);
-					QuotationAjaxRequest({});
+					new MyAjaxRequest(BASE_URL+"po/update", {
+						data: {
+							p_id: add_items["p_id"]
+						},
+						method: "POST",
+						onSuccess: function (rslt){
+							console.log(rslt);
+							InventoryAjaxRequest({});
+						},
+						onFailure: function (rslt){
+							console.log(rslt);
+						}
+					});
 				} else {
 					//Display error
 					if(DEBUG_TRACE) console.log(rslt.errMsg);

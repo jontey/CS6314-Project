@@ -101,6 +101,10 @@ function create_table(q){
 				$.ajax({
 					url: BASE_URL+"quotation/upload/"+row, 
 					data: data,
+					headers: {
+						"x-access-token": localStorage.getItem("token") || "",
+						"x-key": localStorage.getItem("user") || ""
+					},
 					cache: false,
 					contentType: false,
 					processData: false,
@@ -193,63 +197,11 @@ function QuotationAjaxRequest(data){
 		}, false);
 }
 
-function MyAjaxRequest (url, opts, noRetry){
-	if (DEBUG_TRACE) logit ("myAjaxRequest: "+ url +"\n" + opts);
-	console.log(opts);
-	var wasSuccess = opts.onSuccess;
-	var wasFailure = opts.onFailure;
-	var beforeSend = opts.beforeSend;
-	var retry = 0;
-	var delay = 5;
-	var show = true;
-	var noRetry = noRetry===true?true:false;
-	var silentTimer;
-
-	myRetry();
-	return;
-
-	function myRetry(){
-		++retry;
-		$.ajax({
-			url: url,
-			data: opts.data,
-			dataType: "json",
-			beforeSend: beforeSend,
-			method: opts.method==null?"POST":opts.method,
-			success: mySuccess, 
-			error: myFailure
-		});
-		//delay = delay * 1.25;
-	}
-	function myFailure(xhr, text, err){
-		console.log(text, err);
-		var o = {};
-		o.ok = false;
-		o.errMsg = "AJAX Communication Failure";
-		wasFailure (o);
-	}
-	function mySuccess (rslt){
-		if (rslt.ok){
-			logit(rslt);
-			wasSuccess (rslt);
-		}
-	}
-
-	function silentRetry() {
-		clearTimeout(silentTimer);
-		myRetry();
-	}
-}
-
-function logit (msg){
-	var now = new Date();
-	console.log (now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
-}
 
 //Draw table
 	new MyAjaxRequest(BASE_URL+"quotation/", {
 		data: {},
-		method: "GET",
+		method: "POST",
 		onSuccess: function (rslt){
 			console.log(rslt);
 			if(rslt.ok){
@@ -276,6 +228,7 @@ function logit (msg){
 		$(".search").val("");
 		QuotationAjaxRequest({});
 	});
+	$("#add_by").val(localStorage.getItem("initials"));
 	
 		
 	$(".search").keyup(function(){

@@ -37,9 +37,9 @@ router.get('/manufacturer/:filename', function (req, res){
 				//Send 404
 			} else {
 				if(docs.length < 1)
-					return;
+					res.status(404).send('Not found');
 				if(docs[0].logo == null)
-					return;
+					res.status(404).send('Not found');
 				var file = docs[0].logo;
 				res.download(file.url, file.name);
 			}

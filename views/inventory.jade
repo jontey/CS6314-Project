@@ -2,6 +2,67 @@ extend index
 
 block content
 	div(class="mdl-grid demo-content")
+		div(class="mdl-cell mdl-cell--12-col mdl-grid")
+			button(id="button_add", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") New Item
+		div(id="content_add", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid")
+			div(class="form-group mdl-cell")
+				label(for="add_p_id", class="control-label") PO #
+				div
+					input(type="text", class="form-control", id="add_p_id")
+			div(class="form-group mdl-cell")
+				label(for="add_p_date", class="control-label") PO Date
+				div
+					input(type="text", class="form-control", id="add_p_date")
+			div(class="form-group mdl-cell")
+				label(for="add_brand", class="control-label") Brand
+				div
+					input(type="text", class="form-control", id="add_brand")
+			div(class="form-group mdl-cell")
+				label(for="add_name", class="control-label") Item Name
+				div
+					input(type="text", class="form-control", id="add_name")
+			div(class="form-group mdl-cell")
+				label(for="add_branch", class="control-label") Branch
+				div
+					input(type="text", class="form-control", id="add_branch")
+			div(class="form-group mdl-cell")
+				label(for="add_serial", class="control-label") Serial #
+				div
+					input(type="text", class="form-control", id="add_serial")
+			div(class="form-group mdl-cell")
+				label(for="add_unit_cost", class="control-label") Unit Cost
+				div
+					input(type="text", class="form-control", id="add_unit_cost", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_delivery", class="control-label") Delivery Cost
+				div
+					input(type="text", class="form-control", id="add_delivery", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_tax_cost", class="control-label") Tax Cost
+				div
+					input(type="text", class="form-control", id="add_tax_cost", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_landed_cost", class="control-label") Landed Cost
+				div
+					input(type="text", class="form-control", id="add_landed_cost", readonly="true", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_markup", class="control-label") Markup %
+				div
+					input(type="text", class="form-control", id="add_markup", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_retail", class="control-label") Retail
+				div
+					input(type="text", class="form-control", id="add_retail", readonly="true", value="0")
+			div(class="form-group mdl-cell")
+				label(for="add_status", class="control-label") Status
+				div
+					input(type="text", class="form-control", id="add_status")
+			div(class="form-group mdl-cell")
+				label(for="add_notes", class="control-label") Notes
+				div
+					input(type="text", class="form-control", id="add_notes")
+			div(class="mdl-grid mdl-cell mdl-cell--12-col")
+				button(id="button_save", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored") Add
 		div(id="content_table", class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid", style="overflow-x:auto")
 			table(class="full-width mdl-data-table mdl-js-data-table")
 				thead
@@ -9,11 +70,11 @@ block content
 						th No
 						th(class="mdl-data-table__cell--non-numeric") PO #
 						th(class="mdl-data-table__cell--non-numeric") PO Date
+						th(class="mdl-data-table__cell--non-numeric") Brand
 						th(class="mdl-data-table__cell--non-numeric") Item Name
-						th(class="mdl-data-table__cell--non-numeric") Branch
 						th(class="mdl-data-table__cell--non-numeric") Serial #
-						th Landed Cost (RM)
-						th Retail (RM)
+						th Landed Cost
+						th Retail
 						th(class="mdl-data-table__cell--non-numeric") Status
 						th(class="mdl-data-table__cell--non-numeric") Notes
 						th
@@ -21,19 +82,19 @@ block content
 						td(class="mdl-data-table__cell--non-numeric")
 							i(class="material-icons") search
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="po_number")
+							input(class="search", params="p_id")
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="date")
+							input(class="search", params="p_date")
+						td(class="mdl-data-table__cell--non-numeric")
+							input(class="search", params="brand")
 						td(class="mdl-data-table__cell--non-numeric")
 							input(class="search", params="name")
 						td(class="mdl-data-table__cell--non-numeric")
-							input(class="search", params="branch")
-						td(class="mdl-data-table__cell--non-numeric")
 							input(class="search", params="serial")
 						td(class="")
-							input(class="search", params="cost")
+							
 						td(class="")
-							input(class="search", params="retail")
+							
 						td(class="mdl-data-table__cell--non-numeric")
 							input(class="search", params="status")
 						td(class="mdl-data-table__cell--non-numeric")
