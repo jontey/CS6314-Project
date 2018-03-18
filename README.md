@@ -1,4 +1,6 @@
 # CS6314-Project
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/jontey/CS6314-Project.svg)](https://greenkeeper.io/)
 Quotation and Inventory Management System
 
 ## Requirements
